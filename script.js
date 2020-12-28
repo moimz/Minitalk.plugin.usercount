@@ -6,7 +6,7 @@
  * @file /plugins/usercount/script.js
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
- * @version 1.0.1
+ * @version 1.0.0
  * @modified 2020. 12. 24.
  */
 
