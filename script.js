@@ -3,7 +3,7 @@
  *
  * 미니톡 접속자수를 조건에 따라 변경할 수 있습니다.
  * 
- * @file /plugins/usercount/plugin.js
+ * @file /plugins/usercount/script.js
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
  * @version 1.0.1
