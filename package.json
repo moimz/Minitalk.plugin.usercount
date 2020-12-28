@@ -5,6 +5,9 @@
 		"ko":"접속자수 변경 플러그인"
 	},
 	"version":"1.0.1",
+	"description":{
+		"ko":"미니톡 접속자수를 시간대별로 랜덤하게 증가시키는 플러그인 입니다."
+	},
 	"author":{
 		"name":"Arzz",
 		"email":"arzz@arzz.com"
