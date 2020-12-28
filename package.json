@@ -1,5 +1,6 @@
 {
 	"id":"com.moimz.minitalk.plugin.usercount",
+	"icon":"xi-users",
 	"title":{
 		"ko":"접속자수 변경 플러그인"
 	},
