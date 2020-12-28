@@ -2,7 +2,7 @@
 	"id":"com.moimz.minitalk.plugin.usercount",
 	"icon":"xi xi-users",
 	"title":{
-		"ko":"접속자수 변경 플러그인"
+		"ko":"접속자수변경 플러그인"
 	},
 	"version":"1.0.1",
 	"description":{
