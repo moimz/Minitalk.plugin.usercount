@@ -1,0 +1,13 @@
+{
+	"id":"com.moimz.minitalk.plugin.usercount",
+	"title":{
+		"ko":"접속자수 변경 플러그인"
+	},
+	"version":"1.0.1",
+	"author":{
+		"name":"Arzz",
+		"email":"arzz@arzz.com"
+	},
+	"homepage":"https://www.minitalk.io",
+	"language":"ko"
+}
