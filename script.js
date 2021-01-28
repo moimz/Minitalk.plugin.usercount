@@ -7,8 +7,9 @@
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
  * @version 1.0.0
- * @modified 2020. 12. 24.
+ * @modified 2021. 1. 24.
  */
+if (Minitalk === undefined) return;
 
 /**
  * 접속자수 변경을 자연스럽게 하기 위해 유저목록를 비활성화하고 접속자 알림 메시지를 사용하지 않도록 설정한다.
@@ -16,12 +17,63 @@
  */
 if (Minitalk.version < 70000) { // 7.0 버전 이하 인경우
 	Minitalk.on("init",function(minitalk) {
-		minitalk.viewUser = false; // 접속자목록 숨기기
-		minitalk.viewUserNotification = false; // 접속자 접속알림 메시지 숨기기
+		/**
+		 * 박스에 참여중인 경우 적용하지 않는다.
+		 */
+		if (minitalk.box.isBox() == true) {
+			return;
+		}
+		
+		/**
+		 * 접속자 접속/접속해제 알림메시지를 보이도록 설정되어있다면 제거한다.
+		 */
+		var types = [];
+		for (var type in minitalk.viewUserNotification) {
+			if (type == "join" || type == "leave") continue;
+			types.push(type);
+		}
+		minitalk.viewUserNotification = types;
+	});
+	
+	Minitalk.on("initChannel",function(minitalk) {
+		// 접속자보기 버튼 숨기기
+		var $frame = $("div[data-role=frame]");
+		var $header = $("header",$frame);
+		var $tabs = $("div[data-role=tabs]",$header);
+		if ($("button[data-action=users]",$tabs).length == 1) {
+			$("button[data-action=users]",$tabs).hide();
+		}
+	});
+	
+	Minitalk.on("connecting",function(minitalk) {
+		// 유저목록 사용안하도록 수정
+		minitalk.socket.channel.use_users = false;
+		
+		// 유저목록 숨기기
+		minitalk.ui.createUsers(false);
 	});
 } else { // 7.0 버전 이상인 경우
 	Minitalk.on("init",function(minitalk) {
-		minitalk.viewUserNotification = false; // 접속자 접속알림 메시지 숨기기
+		/**
+		 * 박스에 참여중인 경우 적용하지 않는다.
+		 */
+		if (minitalk.box.isBox() == true) {
+			return;
+		}
+		
+		/**
+		 * 접속자 접속/접속해제 알림메시지를 보이도록 설정되어있다면 제거한다.
+		 */
+		var types = [];
+		for (var type in minitalk.viewUserNotification) {
+			if (type == "join" || type == "leave") continue;
+			types.push(type);
+		}
+		minitalk.viewUserNotification = types;
+		
+		// 접속자탭 숨기기
+		var users = $.inArray("users",minitalk.tabs);
+		minitalk.tabs.splice(users,1);
 	});
 }
 
@@ -65,6 +117,13 @@ me.interval = 60; // 60초
 
 // updateUserCount 이벤트가 발생하면 접속자수를 조작한다.
 Minitalk.on("updateUserCount",function(minitalk,usercount) {
+	/**
+	 * 박스에 참여중인 경우 적용하지 않는다.
+	 */
+	if (minitalk.box.isBox() == true) {
+		return;
+	}
+	
 	var time = parseInt(moment().format("H"),10);
 	var add = Math.floor(Math.random() * (me.count[time][1] - me.count[time][0])) + me.count[time][0];
 	
@@ -74,6 +133,13 @@ Minitalk.on("updateUserCount",function(minitalk,usercount) {
 // 서버접속시 유저수를 조작할 타이머를 시작한다.
 me.timer = null;
 Minitalk.on("connect",function(minitalk,channel,me,usercount) {
+	/**
+	 * 박스에 참여중인 경우 적용하지 않는다.
+	 */
+	if (minitalk.box.isBox() == true) {
+		return;
+	}
+	
 	if (me.interval > 0) {
 		timer = setInterval(function() {
 			var time = parseInt(moment().format("H"),10);
@@ -86,5 +152,12 @@ Minitalk.on("connect",function(minitalk,channel,me,usercount) {
 
 // 접속종료시 타이머를 종료한다.
 Minitalk.on("disconnect",function(minitalk,reconnectable) {
+	/**
+	 * 박스에 참여중인 경우 적용하지 않는다.
+	 */
+	if (minitalk.box.isBox() == true) {
+		return;
+	}
+	
 	if (me.timer !== null) clearInterval(me.timer);
 });
