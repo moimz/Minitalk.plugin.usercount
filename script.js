@@ -6,7 +6,7 @@
  * @file /plugins/usercount/script.js
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
- * @version 1.0.0
+ * @version 1.0.1
  * @modified 2021. 1. 24.
  */
 if (Minitalk === undefined) return;
